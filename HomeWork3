@@ -2,61 +2,53 @@ import java.net.SocketException;
 import java.nio.channels.AcceptPendingException;
 import java.nio.file.AccessDeniedException;
 import java.rmi.server.ExportException;
-
-public class HomeWork3 {
-
-    public static void raiseException(Integer exceptionId) throws SocketException, ClassNotFoundException, AccessDeniedException, ExportException {
-
-        if (exceptionId == 1) {
-            throw new SocketException("");
-        }
-        if (exceptionId == 2) {
-            throw new ClassNotFoundException("");
-        }
-        if(exceptionId==3){
-            throw new AccessDeniedException("");
-        }
-        if(exceptionId==4){
-            throw new ExportException("");
-        }
-
-    }
-
-    public static String catchException(Integer integer) {
-        try {
-            raiseException(integer);
-        }
-        catch (SocketException e) {
-            return "SocketException";
-        }
-        catch (ClassNotFoundException e) {
-            return "ClassNotFoundException";
-        }
-        catch (AccessDeniedException e) {
-            return "AccessDeniedException";
-        }
-        catch (ExportException e) {
-            return "ExportException";
-        }
-        return "Exception";
-    }
-}
-
-import java.net.SocketException;
-import java.nio.file.AccessDeniedException;
-import java.rmi.server.ExportException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.function.Function;
 
 public class Main {
-    public static void main(String[] args){
+
+
+    public class HomeWork3 {
+
+        public static void raiseException(Integer exceptionId) throws SocketException, ClassNotFoundException, AccessDeniedException, ExportException {
+
+            if (exceptionId == 1) {
+                throw new SocketException("");
+            }
+            if (exceptionId == 2) {
+                throw new ClassNotFoundException("");
+            }
+            if (exceptionId == 3) {
+                throw new AccessDeniedException("");
+            }
+            if (exceptionId == 4) {
+                throw new ExportException("");
+            }
+
+        }
+
+        public static String catchException(Integer integer) {
+            try {
+                raiseException(integer);
+            } catch (SocketException e) {
+                return "SocketException";
+            } catch (ClassNotFoundException e) {
+                return "ClassNotFoundException";
+            } catch (AccessDeniedException e) {
+                return "AccessDeniedException";
+            } catch (ExportException e) {
+                return "ExportException";
+            }
+            return "Exception";
+        }
+    }
+
+        public static void main(String[] args) {
             testFirstTask();
             testSecondTask();
         }
-
-        /* Техническая секция - сюда писать ничего не надо */
 
         private static final Map<Integer, Class<? extends Exception>> classesCorrelation = Map.of(
                 1, SocketException.class,
@@ -72,16 +64,21 @@ public class Main {
                 try {
                     HomeWork3.raiseException(exceptionId);
                     printTestCase(exceptionId, "Должна была выкинуться ошибка", "Ошибка не выкинулась", 45);
-                } catch(Exception e) {
+                } catch (Exception e) {
                     printTestCase(exceptionId, classesCorrelation.get(exceptionId).toString(), e.getClass().toString(), 45);
                 }
             }
         }
 
         public static void testSecondTask() {
-            System.out.println("\nTests for catchException"); AntiCheat.run();
-            Function<String, String> f = str -> {List<String> r = Arrays.stream(str.split("\\.")).toList();return r.get(r.size() - 1);};
-            for (Integer exceptionId : classesCorrelation.keySet().stream().sorted().toList()) printTestCase(exceptionId, f.apply(classesCorrelation.get(exceptionId).toString()), HomeWork3.catchException(exceptionId), 30);
+            System.out.println("\nTests for catchException");
+            AntiCheat.run();
+            Function<String, String> f = str -> {
+                List<String> r = Arrays.stream(str.split("\\.")).toList();
+                return r.get(r.size() - 1);
+            };
+            for (Integer exceptionId : classesCorrelation.keySet().stream().sorted().toList())
+                printTestCase(exceptionId, f.apply(classesCorrelation.get(exceptionId).toString()), HomeWork3.catchException(exceptionId), 30);
         }
 
         public static class AntiCheat {
@@ -110,9 +107,11 @@ public class Main {
                 try {
                     MessageDigest md = MessageDigest.getInstance("MD5");
                     md.update(total.getBytes());
-                    byte[] digest = md.digest();
+                    byte
+                    [] digest = md.digest();
                     System.out.println("AntiCheatCheck: " + bytesToHex(digest));
-                } catch (NoSuchAlgorithmException ignored) {}
+                } catch (NoSuchAlgorithmException ignored) {
+                }
             }
         }
 
@@ -125,10 +124,12 @@ public class Main {
         public static void printTestCase(int n, String exp, String act, int minLen) {
             Function<String, String> green = str -> "\u001B[34m" + str + "\u001B[0m";
             Function<String, String> yellow = str -> "\u001B[33m" + str + "\u001B[0m";
-            System.out.print( "TEST CASE " + constLen(String.valueOf(n), 4));
-            System.out.print( "Ожидание: " + yellow.apply(constLen(exp, minLen)) + " Реальность: " + green.apply(constLen(act, minLen) + " "));
-            if (Objects.equals(exp, act)) System.out.print("✅"); else System.out.print("❌");
+            System.out.print("TEST CASE " + constLen(String.valueOf(n), 4));
+            System.out.print("Ожидание: " + yellow.apply(constLen(exp, minLen)) + " Реальность: " + green.apply(constLen(act, minLen) + " "));
+            if (Objects.equals(exp, act)) System.out.print("✅");
+            else System.out.print("❌");
             System.out.println();
         }
 
     }
+    
